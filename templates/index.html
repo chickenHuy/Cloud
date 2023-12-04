@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud</title>
+    <link rel="icon" href="../static/logo_title.png">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="vid-container">
+        <video class="bgvid" autoplay="autoplay" muted="muted" preload="auto" loop>
+            <source src="../static/cloud_-_115996 (Original).mp4"" type=" video/mp4">
+        </video>
+        <div class="inner-container">
+            <video class="bgvid inner" autoplay="autoplay" muted="muted" preload="auto" loop>
+                <source src="../static/cloud_-_115996 (Original).mp4"" type=" video/mp4">
+            </video>
+
+            <form id="login-form" action="/submit" method="POST">
+                <div class="box">
+                    <h1>Login</h1>
+                    <input class="access_key_id" type="text" name="access_key_id" placeholder="AWS Access Key ID" />
+                    <input class="secret_access_key" type="password" name="secret_access_key"
+                        placeholder="AWS Secret Access Key" />
+                    <input class="submit" type="submit" value="Login">
+                    <div class="message-box">
+                        <p>Login failed!!! </p>
+                    </div>
+                </div>
+            </form>
+
+            <script>
+                document.getElementById("login-form").addEventListener("submit", function (event) {
+                    event.preventDefault(); // Ngăn chặn form submit
+
+                    var form = event.target;
+                    var formData = new FormData(form);
+
+                    fetch("/submit", {
+                        method: "POST",
+                        body: formData
+                    })
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            showMessage(data.status);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                });
+
+                function showMessage(status) {
+                    var messageBox = document.querySelector('.message-box');
+                    var inputAccessKey = document.querySelector('.access_key_id')
+                    var inputSecretKey = document.querySelector('.secret_access_key')
+                    if (messageBox) {
+                        if (status === 'True') {
+                            window.location.href = '/home';
+                        }
+                        else {
+                            if (status === 'False') {
+                                messageBox.classList.add('active');
+                                inputAccessKey.value = "";
+                                inputSecretKey.value = "";
+                                setTimeout(function () {
+                                    messageBox.classList.remove('active');
+                                }, 3700);
+                            }
+                        }
+                    }
+                }
+            </script>
+</body>
+
+</html>

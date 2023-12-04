@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../static/logo_title.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <div class="sidebar__logo">
+                <img src="../static/logo.png" alt="Logo">
+                <p>Cloud</p>
+            </div>
+            <div class="sidebar__upload">
+                <div class="upload" id="upload__button">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Upload</span>
+                </div>
+            </div>
+            <div class="sidebar__menu">
+                <a href="/home">
+                    <button class="sidebar__home">Your folder</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="content__search">
+            </div>
+            <div class="content__file">
+                <table id="file-list">
+                    <tr>
+                        <th class="table__header--index">Index</th>
+                        <th class="table__header--name">Name</th>
+                        <th class="table__header--owner">Owner</th>
+                        <th class="table__header--share">Share</th>
+                        <th class="table__header--download">Download</th>
+                        <th class="table__header--delete">Delete</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        var jsonData = JSON.parse('{{ json_files|safe }}');
+        var table = document.getElementById('file-list');
+
+        jsonData.forEach(function (file) {
+            var row = table.insertRow();
+            row.classList.add('table__data--row');
+            var indexCell = row.insertCell();
+            var nameCell = row.insertCell();
+            nameCell.classList.add('table__data--name');
+            var ownerCell = row.insertCell();
+            ownerCell.classList.add('table__data--owner');
+            var shareCell = row.insertCell();
+            var downloadCell = row.insertCell();
+            var deleteCell = row.insertCell();
+
+            indexCell.textContent = file.index + 1;
+            nameCell.innerHTML = getFileIcon(file.name) + ' ' + file.name;
+            nameCell.addEventListener('click', function () {
+                window.open(file.url, '_blank');
+            });
+            ownerCell.innerHTML = '<i class="fa-solid fa-user"></i> ' + file.owner;
+
+            function getFileIcon(filename) {
+                var extension = filename.split('.').pop().toLowerCase();
+                var iconMap = {
+                    'png': '../static/image.png',
+                    'pptx': '../static/ppt.png',
+                    'docx': '../static/word.png',
+                    'jpg': '../static/image.jpg',
+                    'pdf': '../static/pdf.png',
+                    'txt': '../static/text.png'
+                };
+                var defaultIcon = '../static/other.png';
+
+                if (extension in iconMap) {
+                    return '<img src="' + iconMap[extension] + '" alt="' + extension + '">';
+                } else {
+                    return '<img src="' + defaultIcon + '" alt="default">';
+                }
+            }
+
+            var shareIcon = document.createElement('i');
+            shareIcon.classList.add('fa', 'fa-solid', 'fa-link');
+            var shareLink = document.createElement('a');
+            shareLink.href = file.url;
+            shareLink.appendChild(shareIcon);
+            shareLink.addEventListener('click', function (event) {
+                event.preventDefault();
+                copyToClipboard(file.url);
+                alert('URL has been copied to clipboard!!!');
+            });
+            shareCell.appendChild(shareLink);
+
+            var downloadIcon = document.createElement('i');
+            downloadIcon.classList.add('fa', 'fa-solid', 'fa-cloud-arrow-down');
+            downloadIcon.setAttribute('data-file', JSON.stringify(file.file));
+            downloadIcon.addEventListener('click', function () {
+                downloadFile(file.file);
+            });
+            downloadCell.appendChild(downloadIcon);
+
+            var deleteButton = document.createElement('i');
+            deleteButton.classList.add('fa-solid', 'fa-trash-can');
+            deleteButton.setAttribute('data-file', JSON.stringify(file.file));
+            deleteButton.addEventListener('click', function () {
+                var confirmed = confirm('Are you sure you want to delete this file?');
+                if (confirmed) {
+                    deleteFile(file.index, file.file);
+                }
+            });
+            deleteCell.appendChild(deleteButton);
+        });
+
+        function copyToClipboard(content) {
+            var textarea = document.createElement('textarea');
+            textarea.value = content;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+
+        function downloadFile(file) {
+            var url = '/download';
+            var data = JSON.stringify({ file: file });
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: data
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Error download file');
+                    }
+                })
+                .then(function (data) {
+                    var status = data.status;
+                    var message = data.message;
+                    if (status === 'True') {
+                        alert(message);
+                        location.reload();
+                    } else {
+                        alert(message);
+                    }
+                })
+                .catch(function (error) {
+                    console.log('Request error:', error);
+                });
+        }
+
+        function deleteFile(index, file) {
+            var url = '/delete';
+            var data = JSON.stringify({ index: index, file: file });
+
+            console.log('File is being deleted...');
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: data
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Error deleting file');
+                    }
+                })
+                .then(function (data) {
+                    var status = data.status;
+                    var message = data.message;
+                    if (status === 'True') {
+                        alert(message);
+                        location.reload();
+                    } else {
+                        alert(message);
+                    }
+                })
+                .catch(function (error) {
+                    console.log('Request error:', error);
+                });
+        }
+
+        var uploadButton = document.getElementById('upload__button');
+
+        uploadButton.addEventListener('click', function () {
+            var fileInput = document.createElement('input');
+
+            fileInput.type = 'file';
+            fileInput.addEventListener('change', function (event) {
+                var file = event.target.files[0];
+                uploadFile(file);
+            });
+            fileInput.click();
+        });
+
+        function uploadFile(file) {
+            var url = '/upload';
+
+            var formData = new FormData();
+            formData.append('file', file);
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        console.log('Error uploading file');
+                    }
+                })
+                .then(function (data) {
+                    var status = data.status;
+                    var message = data.message;
+                    if (status === 'True') {
+                        alert(message);
+                    } else {
+                        alert(message);
+                    }
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log('Request error:', error);
+                });
+        }
+    </script>
+</body>
+
+</html>

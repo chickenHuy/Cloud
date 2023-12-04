@@ -1,10 +1,9 @@
 import boto3
 from botocore.client import Config
-import os
+import time
 
 def delete_file(aws_access_key_id, aws_secret_access_key, filename):
     try:
-        # Tạo đối tượng S3 từ phiên làm việc
         s3 = boto3.resource(
             's3',
             aws_access_key_id=aws_access_key_id,
@@ -13,13 +12,14 @@ def delete_file(aws_access_key_id, aws_secret_access_key, filename):
         )
 
         bucket_name = "awsbucket-project"
-        # Xóa file từ S3
         obj = s3.Object(bucket_name, filename)
+        start_time = time.time()
         obj.delete()
-
-        print(f"File {os.path.basename(filename)} đã được xóa khỏi {bucket_name}.")
-        return True
+        end_time = time.time()
+        time_delete = round(end_time - start_time, 3)
+        message = "File " + filename + " deleted successfully!!! \nTime: " + str(time_delete) + "s"
+        print(message)
+        return message
     except Exception as e:
-        print(f"Có lỗi xảy ra khi xóa file: {e}")
-        return False
+        return ""
     

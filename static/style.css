@@ -1,0 +1,290 @@
+*{
+  font-family: 'Times New Roman', Times, serif;
+}
+body{
+  width: 100vw;
+  height: 100vh;
+  padding:0;
+  margin:0;
+}
+.vid-container{
+  position:relative;
+  height:100vh;
+  overflow:hidden;
+}
+.bgvid{
+  position:absolute;
+  left:0;
+  top:0;
+  width:100vw;
+}
+.inner-container{
+  width:430px;
+  height:415px;
+  position:absolute;
+  top:calc(50vh - 200px);
+  left:calc(50vw - 200px);
+  overflow:hidden;
+  border-radius: 20px;
+}
+.bgvid.inner{
+  top:calc(-50vh + 200px);
+  left:calc(-50vw + 200px);
+  filter: url("data:image/svg+xml;utf9,<svg%20version='1.1'%20xmlns='http://www.w3.org/2000/svg'><filter%20id='blur'><feGaussianBlur%20stdDeviation='10'%20/></filter></svg>#blur");
+  -webkit-filter:blur(10px);
+  -ms-filter: blur(10px);
+  -o-filter: blur(10px);
+  filter:blur(10px);
+}
+.box{
+  position:absolute;
+  height:350px;
+  width:100%;
+  font-family:Helvetica;
+  color:#fff;
+  background:rgba(0,0,0,0.13);
+  padding:30px 0px;
+  border-radius: 20px;
+}
+.box h1{
+  text-align:center;
+  margin:30px 0 50px;
+  font-size:30px;
+}
+.box input{
+  display:block;
+  width:300px;
+  margin:20px auto;
+  padding:15px;
+  background:rgba(255,255,255,0.77);
+  color:#000;
+  border:0;
+  border-radius: 10px;
+  font-size: 0.9em;
+}
+.box input:focus,.box input:active,.box button:focus,.box button:active{
+  outline:none;
+}
+.box .submit{
+  background:#2ecc71;
+  border:0;
+  color:#fff;
+  padding:10px;
+  font-size:20px;
+  width:330px;
+  margin:40px auto 0px;
+  display:block;
+  cursor:pointer;
+  border-radius: 10px;
+  transition: all .1s linear;
+}
+.box .submit:active{
+  background:#27ae60;
+}
+.box .submit:hover{
+  transform: scale(1.05);
+}
+.box p{
+  font-size:14px;
+  text-align:center;
+}
+.box p span{
+  cursor:pointer;
+  color:#666;
+}
+
+.inner-container .message-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 170px;
+  height: 37px;
+  border-radius: 10px;
+  margin: 15px auto;
+  background-color: #ff6363;
+  display: none;
+}
+.inner-container .message-box.active{
+  display: flex;
+}
+.inner-container .message-box p{
+  color: #333;
+  font-size: 1.1em;
+}
+
+
+
+/* CSS for /home */
+.wrapper{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #588aff;
+}
+.sidebar{
+  width: 15%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+}
+.sidebar .sidebar__logo{
+  display: flex;
+  margin: 0px 5px 10px;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 210px;
+  height: 55px;
+  transform: translateY(1px);
+  border-radius: 28px;
+}
+.sidebar .sidebar__logo img{
+  width: 55px;
+  height: 55px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+.sidebar .sidebar__logo p{
+  color: #444746;
+  font-size: 2em;
+  font-weight: bold;
+  transform: translateY(4px);
+}
+.wrapper .content{
+  width: 85%;
+  height: 100%;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: transparent;
+}
+.wrapper .content .content__search{
+  width: 100%;
+  height: 5%;
+  background-color: transparent;
+}
+.wrapper .content .content__file{
+  width: 99%;
+  height: 93%;
+  background-color: #fff;
+  border-radius: 13px;
+}
+.wrapper .sidebar .sidebar__upload{
+  background-color: #fff;
+  width: 150px;
+  height: 60px;
+  margin: 0px 10px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all .1s linear;
+  box-shadow: 5px 5px 10px #444746;
+}
+.wrapper .sidebar .sidebar__upload:hover{
+  transform: scale(1.05);
+}
+.wrapper .sidebar .sidebar__upload *{
+  color: #444746;
+  font-size: 1.07em;
+  margin: 0 3px;
+}
+.wrapper .content .content__file table{
+  width: 100%;
+  height: auto; 
+  border-collapse: collapse;
+
+}
+.wrapper .content .content__file table tr th{
+  color: #444746;
+  height: 35px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  padding-left: 7px;
+}
+.wrapper .content .content__file table tr .table__header--share,
+.wrapper .content .content__file table tr .table__header--download,
+.wrapper .content .content__file table tr .table__header--delete
+{
+  width: 70px;
+}
+.wrapper .content .content__file table tr .table__header--owner
+{
+  width: 250px;
+}
+.wrapper .content .content__file table tr .table__header--name
+{
+  padding-left: 70px;
+  text-align: left;
+}
+.wrapper .content .content__file table tr .table__header--index
+{
+  width: 50px;
+}
+.wrapper .content .content__file table td{
+  height: 35px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+}
+.wrapper .content .content__file table .table__data--row:hover{
+  background-color: #e7e8eb;
+}
+.wrapper .content .content__file table .table__data--name{
+  cursor: pointer;
+  text-align: left;
+  padding-left: 70px;
+}
+.wrapper .content .content__file table .table__data--name img{
+  margin-right: 3px;
+  transform: translateY(2px);
+}
+.wrapper .content .content__file table tr td i{
+  color: #444746;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all .03s linear;
+}
+.wrapper .content .content__file table tr td i:hover{
+  transform: scale(1.2);
+}
+.wrapper .content .content__file table .table__data--owner *{
+  color: #444746;
+  margin: 5px;
+}
+.wrapper .content .content__file table .table__data--owner i{
+  width: 20px;
+  height: 20px;
+  padding: 3px 1.5px 1px;
+  border-radius: 50%;
+  border: 1px solid #444746;
+}
+.wrapper .sidebar .sidebar__menu{
+  width: 90%;
+  height: auto;
+  margin: 20px auto 0px;
+}
+.wrapper .sidebar .sidebar__menu .sidebar__home{
+  width: 100%;
+  height: 43px;
+  font-size: 1.3em;
+  font-weight: bold;
+  text-align: left;
+  text-decoration: none;
+  padding-left: 20px;
+  color: #444746;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: white;
+  transition: all .1s linear;
+  box-shadow: 2px 2px 7px #444746;
+}
+.wrapper .sidebar .sidebar__menu .sidebar__home:hover{
+  transform: scale(1.03);
+}
