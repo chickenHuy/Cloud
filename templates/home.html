@@ -20,8 +20,8 @@
                 <img src="../static/logo.png" alt="Logo">
                 <p>Cloud</p>
             </div>
-            <div class="sidebar__upload">
-                <div class="upload" id="upload__button">
+            <div class="sidebar__upload" id="upload__button">
+                <div class="upload">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                     <span>Upload</span>
                 </div>
@@ -91,7 +91,9 @@
                     'docx': '../static/word.png',
                     'jpg': '../static/image.jpg',
                     'pdf': '../static/pdf.png',
-                    'txt': '../static/text.png'
+                    'txt': '../static/text.png',
+                    'mp4': '../static/pdf.png',
+                    'webm': '../static/text.png'
                 };
                 var defaultIcon = '../static/other.png';
 
@@ -234,7 +236,6 @@
         }
 
         var uploadButton = document.getElementById('upload__button');
-
         uploadButton.addEventListener('click', function () {
             var fileInput = document.createElement('input');
 
