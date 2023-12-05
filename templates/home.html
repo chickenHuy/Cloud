@@ -215,7 +215,12 @@
                     if (status === 'True') {
                         setTimeout(function () {
                             alert(message);
-                            location.reload();
+                            var hasActiveClass = Array.from(downloadAnimation.classList).some(function (cls) {
+                                return cls.startsWith('active-');
+                            });
+                            if (!hasActiveClass) {
+                                location.reload();
+                            }
                         }, 0);
                     } else {
                         setTimeout(function () {
@@ -269,7 +274,12 @@
                     if (status === 'True') {
                         setTimeout(function () {
                             alert(message);
-                            location.reload();
+                            var hasActiveClass = Array.from(downloadAnimation.classList).some(function (cls) {
+                                return cls.startsWith('active-');
+                            });
+                            if (!hasActiveClass) {
+                                location.reload();
+                            }
                         }, 0);
                     } else {
                         setTimeout(function () {
