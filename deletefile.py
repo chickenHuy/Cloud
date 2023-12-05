@@ -13,6 +13,8 @@ def delete_file(aws_access_key_id, aws_secret_access_key, filename):
 
         bucket_name = "awsbucket-project"
         obj = s3.Object(bucket_name, filename)
+        print('Start deleting...')
+        print('File : ' + filename)
         start_time = time.time()
         obj.delete()
         end_time = time.time()

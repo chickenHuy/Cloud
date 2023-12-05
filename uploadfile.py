@@ -18,6 +18,8 @@ def upload_file_to_s3(file, aws_access_key_id, aws_secret_access_key, folder_nam
         acl="private"
         file_key = f"{folder_name}{file.filename}"
 
+        print('Start upload...')
+        print('File : ' + file.filename)
         start_time = time.time()
         s3.upload_fileobj(file, bucket_name, file_key, ExtraArgs={"ACL": acl,"ContentType": file.content_type}) 
         end_time = time.time()

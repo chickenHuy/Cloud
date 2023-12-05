@@ -41,9 +41,12 @@ def delete():
     message = deletefile.delete_file(session['access_key_id'], session['secret_access_key'], file)
 
     if message != "":
+        print(message)
+        print()
         status = 'True'
         return jsonify({'status': status, 'message': message})
     else:
+        print('Delete error!!!')
         status = 'False'
         return jsonify({'status': status, 'message': 'Failed to delete file'})
 
@@ -54,9 +57,11 @@ def download():
     message = downloadfile.download_file(session['access_key_id'], session['secret_access_key'], "awsbucket-project", file)
     if message != "":
         status = 'True'
-        print("Success")
+        print(message)
+        print()
         return jsonify({'status': status, 'message': message})
     else:
+        print('Download error!!!')
         status = 'False'
         return jsonify({'status': status, 'message': 'Failed to download file'})
 
@@ -69,9 +74,11 @@ def upload():
     message = uploadfile.upload_file_to_s3(file, session['access_key_id'], session['secret_access_key'], session['folder_name'])
     if message != "":
         status = 'True'
-        print("Success")
+        print(message)
+        print()
         return jsonify({'status': status, 'message': message})
     else:
+        print('Upload error!!!')
         status = 'False'
         return jsonify({'status': status, 'message': 'Failed to download file'})
 

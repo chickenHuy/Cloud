@@ -14,7 +14,9 @@ def download_file(aws_access_key_id, aws_secret_access_key, bucket_name, filenam
         )
 
         download_folder = os.path.expanduser('~/Downloads/')
-        print(download_folder)
+        print('Start download...')
+        print('Folder : ' + download_folder)
+        print('File : ' + filename)
         os.makedirs(download_folder, exist_ok=True)
         local_file_path = os.path.join(download_folder, os.path.basename(filename))
 

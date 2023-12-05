@@ -9,6 +9,7 @@
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
@@ -46,6 +47,16 @@
                         <th class="table__header--delete">Delete</th>
                     </tr>
                 </table>
+            </div>
+            <div class="load-wrapp" id="download--animation">
+                <div class="load-3">
+                    <p>Processing...</p>
+                    <div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -135,6 +146,10 @@
         function downloadFile(file) {
             var url = '/download';
             var data = JSON.stringify({ file: file });
+            var currentTime = new Date().getTime();
+            var activeClass = 'active-' + currentTime;
+            var downloadAnimation = document.getElementById('download--animation');
+            downloadAnimation.classList.add(activeClass);
 
             fetch(url, {
                 method: 'POST',
@@ -144,6 +159,7 @@
                 body: data
             })
                 .then(function (response) {
+                    downloadAnimation.classList.remove(activeClass);
                     if (response.ok) {
                         return response.json();
                     } else {
@@ -154,10 +170,13 @@
                     var status = data.status;
                     var message = data.message;
                     if (status === 'True') {
-                        alert(message);
-                        location.reload();
+                        setTimeout(function () {
+                            alert(message);
+                        }, 0);
                     } else {
-                        alert(message);
+                        setTimeout(function () {
+                            alert(message);
+                        }, 0);
                     }
                 })
                 .catch(function (error) {
@@ -168,6 +187,10 @@
         function deleteFile(index, file) {
             var url = '/delete';
             var data = JSON.stringify({ index: index, file: file });
+            var currentTime = new Date().getTime();
+            var activeClass = 'active-' + currentTime;
+            var downloadAnimation = document.getElementById('download--animation');
+            downloadAnimation.classList.add(activeClass);
 
             console.log('File is being deleted...');
 
@@ -179,6 +202,7 @@
                 body: data
             })
                 .then(function (response) {
+                    downloadAnimation.classList.remove(activeClass);
                     if (response.ok) {
                         return response.json();
                     } else {
@@ -189,10 +213,14 @@
                     var status = data.status;
                     var message = data.message;
                     if (status === 'True') {
-                        alert(message);
-                        location.reload();
+                        setTimeout(function () {
+                            alert(message);
+                            location.reload();
+                        }, 0);
                     } else {
-                        alert(message);
+                        setTimeout(function () {
+                            alert(message);
+                        }, 0);
                     }
                 })
                 .catch(function (error) {
@@ -214,6 +242,10 @@
         });
 
         function uploadFile(file) {
+            var currentTime = new Date().getTime();
+            var activeClass = 'active-' + currentTime;
+            var downloadAnimation = document.getElementById('download--animation');
+            downloadAnimation.classList.add(activeClass);
             var url = '/upload';
 
             var formData = new FormData();
@@ -224,6 +256,7 @@
                 body: formData
             })
                 .then(function (response) {
+                    downloadAnimation.classList.remove(activeClass);
                     if (response.ok) {
                         return response.json();
                     } else {
@@ -234,11 +267,15 @@
                     var status = data.status;
                     var message = data.message;
                     if (status === 'True') {
-                        alert(message);
+                        setTimeout(function () {
+                            alert(message);
+                            location.reload();
+                        }, 0);
                     } else {
-                        alert(message);
+                        setTimeout(function () {
+                            alert(message);
+                        }, 0);
                     }
-                    location.reload();
                 })
                 .catch(function (error) {
                     console.log('Request error:', error);
