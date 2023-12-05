@@ -16,6 +16,7 @@ def submit():
         print(f'Success')
         print(f'AWS Access Key ID: {access_key_id}')
         print(f'AWS Secret Access Key: {secret_access_key}')
+        session['login'] = True
         session['access_key_id'] = access_key_id
         session['secret_access_key'] = secret_access_key
         status = 'True'
@@ -27,6 +28,11 @@ def submit():
 
 @app.route('/home')
 def home():
+    if 'login' not in session: 
+        return redirect('/')
+    if 'login' in session and session['login'] != True:
+        return redirect('/')
+        
     json_files = getfile.get_file()
     if json_files:
         session['json_files'] = json_files
@@ -81,6 +87,14 @@ def upload():
         print('Upload error!!!')
         status = 'False'
         return jsonify({'status': status, 'message': 'Failed to download file'})
+
+@app.route('/logout')
+def logout():
+    if 'login' in session and session['login'] == True:
+        session.clear()
+        print('Cooooooooo')
+        redirect('/')
+    return redirect('/')
 
 @app.route('/')
 def login():
