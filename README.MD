@@ -9,3 +9,16 @@
 * Nguyễn Thanh Huy - 21110473
 * Nguyễn Thiện Luân - 21110538
 * Hồ Phương Đông - 21110424
+
+## Descriptions
+
+### Storage service
+
+* Use Key Manegement Service to create key encrypt and decrypt data.
+* Use Cloudtrail to tracking and logging.
+* Use Identity and Access Manegement to manage and assign permissions to users.
+* Use S3 to storage.
+
+### User interface
+
+* User framework Flask create user interface.
