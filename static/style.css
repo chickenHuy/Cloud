@@ -196,8 +196,13 @@ body {
 .wrapper .content .content__file {
   width: 99%;
   height: 93%;
+  overflow-y: scroll;
   background-color: #fff;
   border-radius: 13px;
+}
+
+.wrapper .content .content__file::-webkit-scrollbar {
+  width: 8px; /* Điều chỉnh độ rộng của thanh cuộn */
 }
 
 .wrapper .sidebar .sidebar__upload {
