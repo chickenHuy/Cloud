@@ -92,7 +92,6 @@ def upload():
 def logout():
     if 'login' in session and session['login'] == True:
         session.clear()
-        print('Cooooooooo')
         redirect('/')
     return redirect('/')
 

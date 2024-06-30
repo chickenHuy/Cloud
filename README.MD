@@ -22,3 +22,36 @@
 ### User interface
 
 * User framework Flask create user interface.
+
+## Installation and Running the Project
+
+### Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+* You have installed Python 3.6 or higher.
+* You have an AWS account and have configured AWS CLI with appropriate access rights.
+* Clone the repository to your local machine.
+
+  ```bash
+  git clone https://github.com/chickenHuy/Cloud.git
+  ```
+* To install the required libraries, navigate to the project directory and run:
+  ```bash
+  pip install -r requirements.txt
+  ```
+* To run the project, navigate to the project directory and run:
+  ```bash
+  flask run
+  ```
+* The application will start, and you can access it by navigating to http://127.0.0.1:5000/ in your web browser.
+
+## The website overview
+*Login page*
+
+![Login Page](./image/page_login.png)
+
+*Home page*
+
+![Home Page](./image/page_home.png)
+
